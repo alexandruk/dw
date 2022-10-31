@@ -1,0 +1,107 @@
+DROP TABLE Dimensao_EDITORA CASCADE CONSTRAINTS;
+DROP TABLE Dimensao_CLIENTE CASCADE CONSTRAINTS;
+DROP TABLE Dimensao_ASSUNTO CASCADE CONSTRAINTS;
+DROP TABLE Dimensao_TEMPO CASCADE CONSTRAINTS;
+DROP TABLE Dimensao_LOCAL CASCADE CONSTRAINTS;
+DROP TABLE Dimensao_AUTOR CASCADE CONSTRAINTS;
+DROP TABLE Dimensao_LIVRO CASCADE CONSTRAINTS;
+DROP TABLE Fato_Venda CASCADE CONSTRAINTS;
+DROP TABLE Fato_Venda_Mes CASCADE CONSTRAINTS;
+ 
+CREATE TABLE Dimensao_EDITORA (
+Cod_Editora number(5),
+Nome varchar2(20),
+CONSTRAINT COD_EDITORA_DIM_PK PRIMARY KEY(COD_EDITORA)
+);
+
+CREATE TABLE Dimensao_CLIENTE (
+Cod_Cliente number(5),
+Nome varchar2(20),
+Cidade varchar2(10),
+Estado varchar2(2),
+Sexo varchar2(1),
+CONSTRAINT Cod_Cliente_DIM_PK PRIMARY KEY (COD_CLIENTE)
+);
+
+CREATE TABLE Dimensao_ASSUNTO (
+Cod_Assunto number(5),
+Descricao varchar2(20),
+CONSTRAINT COD_ASSUNTO_DIM_PK PRIMARY KEY(COD_ASSUNTO)
+);
+
+CREATE TABLE Dimensao_TEMPO (
+Data date,
+Mes number(2),
+Ano NUMBER(4),
+CONSTRAINT DATA_DIM_PK PRIMARY KEY(DATA)
+);
+
+CREATE TABLE Dimensao_LOCAL (
+Cod_Dim_Local number(5),
+Nome_Dim_local varchar2(20),
+End_Dim_local varchar2(30),
+CONSTRAINT COD_LOJA_DIM_PK PRIMARY KEY(COD_Dim_local)
+);
+
+CREATE TABLE Dimensao_AUTOR (
+Matricula_Autor number(5),
+Nome varchar2(20),
+CPF varchar2(10),
+Cidade varchar2(10),
+Estado varchar2(2),
+CONSTRAINT Matricula_Autor_DIM_PK PRIMARY KEY(Matricula_Autor)
+);
+
+CREATE TABLE Dimensao_LIVRO (
+Cod_Livro number(5),
+Nome varchar2(20),
+Quant_Folhas NUMBER(4),
+CONSTRAINT Cod_Livro_DIM_PK PRIMARY KEY(Cod_Livro)
+);
+
+CREATE TABLE Fato_Venda (
+Cod_Venda number(5),
+Cod_Livro number(5),
+Data date,
+Cod_local number(5),
+Cod_Cliente number(5),
+Cod_Assunto number(5),
+Cod_Editora number(5),
+Matricula_Autor number(5),
+Quantidade number(4),
+Valor number(7,2),
+CONSTRAINT Cod_VD_Cod_LiV_DT_DIM_PK PRIMARY KEY(Cod_Venda,Cod_Livro,Data),
+CONSTRAINT Cod_Livro_DIM_FK FOREIGN KEY(Cod_Livro)
+REFERENCES Dimensao_LIVRO(Cod_Livro),
+CONSTRAINT Data_DIM_FK FOREIGN KEY(Data)
+REFERENCES Dimensao_Tempo(Data),
+CONSTRAINT Cod_local_DIM_FK FOREIGN KEY(Cod_Local)
+REFERENCES Dimensao_Local(Cod_Dim_local),
+CONSTRAINT Cod_Cliente_DIM_FK FOREIGN KEY(Cod_Cliente)
+REFERENCES Dimensao_CLIENTE (Cod_Cliente),
+CONSTRAINT Cod_Assunto_DIM_FK FOREIGN KEY(Cod_Assunto)
+REFERENCES Dimensao_ASSUNTO (Cod_Assunto),
+CONSTRAINT Cod_Editora_DIM_FK FOREIGN KEY(Cod_Editora)
+REFERENCES Dimensao_EDITORA (Cod_Editora),
+CONSTRAINT Matricula_Autor_DIM_FK FOREIGN KEY(Matricula_Autor)
+REFERENCES Dimensao_AUTOR (Matricula_Autor)
+);
+ 
+CREATE TABLE Fato_Venda_Mes (
+Data date,
+Cod_Loja number(5),
+Cod_Cliente number(5),
+Cod_Assunto number(5),
+Cod_Editora number(5),
+Cod_Livro number(5),
+Matricula_Autor number(5),
+Quantidade number(4),
+Valor number(7,2),
+CONSTRAINT Cod_LIV_DT_DIM_PK PRIMARY KEY(Data,Cod_Loja),
+CONSTRAINT Cod_CLl_DIM_V_FK FOREIGN KEY(Cod_Cliente)
+REFERENCES Dimensao_CLIENTE (Cod_Cliente),
+CONSTRAINT Cod_ED_DIM_V_FK FOREIGN KEY(Cod_Editora)
+REFERENCES Dimensao_EDITORA (Cod_Editora),
+CONSTRAINT Cod_LIV_DIM_V_FK FOREIGN KEY(Cod_Livro)
+REFERENCES Dimensao_LIVRO(Cod_Livro)
+);

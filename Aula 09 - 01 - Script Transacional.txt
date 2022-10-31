@@ -1,0 +1,106 @@
+
+-- Criação das tabelas conforme modelo transacional
+ 
+DROP TABLE ASSUNTO CASCADE CONSTRAINTS;
+DROP TABLE LIVRO CASCADE CONSTRAINTS;
+DROP TABLE EDITORA CASCADE CONSTRAINTS;
+DROP TABLE AUTOR CASCADE CONSTRAINTS;
+DROP TABLE VENDA CASCADE CONSTRAINTS;
+DROP TABLE ITEM CASCADE CONSTRAINTS;
+DROP TABLE CLIENTE CASCADE CONSTRAINTS;
+DROP TABLE ESCREVE CASCADE CONSTRAINTS;
+DROP TABLE LOCAL CASCADE CONSTRAINTS;
+ 
+CREATE TABLE ASSUNTO (
+cd_assunto number(5),
+ds_assunto varchar2(20),
+CONSTRAINT CD_ASSUNTO_PK PRIMARY KEY (CD_ASSUNTO)
+);
+ 
+DESC ASSUNTO
+ 
+CREATE TABLE EDITORA (
+cd_editora number(5),
+nm_editora varchar2(20),
+CONSTRAINT cd_editora_PK PRIMARY KEY (cd_editora)
+);
+ 
+DESC EDITORA
+ 
+CREATE TABLE AUTOR (
+nr_matricula number(5),
+nm_autor varchar2(20),
+nr_CPF number(10),
+ds_cidade varchar2(10),
+sg_estado varchar2(2),
+CONSTRAINT nr_matricula_PK PRIMARY KEY (nr_matricula)
+);
+ 
+DESC AUTOR
+ 
+CREATE TABLE LIVRO (
+cd_livro number(5),
+nm_livro varchar2(20),
+cd_editora number(5),
+cd_assunto number(5),
+vl_livro NUMBER(7,2),
+qt_folhas number(4),
+CONSTRAINT cd_livro_PK PRIMARY KEY (cd_livro),
+CONSTRAINT cd_assunto_FK FOREIGN KEY(cd_assunto) REFERENCES ASSUNTO (cd_assunto),
+CONSTRAINT cd_editora_FK FOREIGN KEY(cd_editora) REFERENCES EDITORA (cd_editora)
+);
+ 
+DESC LIVRO
+ 
+CREATE TABLE LOCAL (
+cod_local number(5),
+nome_local varchar2(20),
+endereco_local varchar2(30),
+CONSTRAINT COD_LOJA_PK PRIMARY KEY(Cod_local)
+);
+ 
+CREATE TABLE CLIENTE (
+cd_cliente number(5),
+nm_cliente varchar2(20),
+sexo varchar2(1),
+ds_cidade varchar2(20),
+sg_estado varchar2(2),
+cod_local number(05),
+CONSTRAINT cd_cliente_PK PRIMARY KEY(cd_cliente),
+CONSTRAINT cd_local_fk FOREIGN KEY(cod_local) references LOCAL (cod_local)
+);
+ 
+DESC CLIENTE
+ 
+CREATE TABLE VENDA (
+cd_venda number(5),
+cd_cliente number(5),
+dt_venda date,
+CONSTRAINT cd_venda_PK PRIMARY KEY (cd_venda),
+CONSTRAINT cd_cliente_FK FOREIGN KEY(cd_cliente) REFERENCES CLIENTE (cd_cliente)
+);
+ 
+DESC VENDA
+ 
+CREATE TABLE ITEM (
+nr_item number(5),
+cd_venda number(5),
+cd_livro number(5),
+qt_item number(4),
+CONSTRAINT nr_item_PK PRIMARY KEY(nr_item,cd_venda),
+CONSTRAINT cd_venda_FK FOREIGN KEY(cd_venda) REFERENCES VENDA (cd_venda),
+CONSTRAINT cd_livro_FK FOREIGN KEY(cd_livro) REFERENCES LIVRO (cd_livro)
+);
+ 
+DESC ITEM
+ 
+CREATE TABLE ESCREVE (
+cd_livro number(5),
+nr_matricula number(5),
+dt_escreve date,
+CONSTRAINT cd_livro_escreve_FK FOREIGN KEY(cd_livro) REFERENCES LIVRO (cd_livro),
+CONSTRAINT nr_matricula_FK FOREIGN KEY(nr_matricula) REFERENCES AUTOR (nr_matricula)
+);
+ 
+DESC ESCREVE
+

@@ -1,0 +1,108 @@
+-- Inserção de dados - Banco de Dados Transacional
+
+
+-- TABELA ASSUNTO
+ 
+Insert into ASSUNTO VALUES (11,'INFORMÁTICA');
+Insert into ASSUNTO VALUES (12,'LAZER');
+Insert into ASSUNTO VALUES (13,'CULINARIA');
+Insert into ASSUNTO VALUES (14,'AUTO AJUDA');
+Insert into ASSUNTO VALUES (15,'ESPORTES');
+ 
+-- TABELA AUTOR
+ 
+Insert into AUTOR VALUES (101,'Barão de Araruna','111222333','SÃO PAULO','SP');
+Insert into AUTOR VALUES(102,'Naruto','222333444','CAMPINAS','SP');
+Insert into AUTOR VALUES (103,'Darth Vader','333444555','CABO FRIO','RJ');
+Insert into AUTOR VALUES (104,'Jack Spicer','444555666','NITERÓI','RJ');
+Insert into AUTOR VALUES (105,'Mancha Negra','555666777','OURO PRETO','MG');
+Insert into AUTOR VALUES (106,'Diavolo','555666777','BRASILIA','DF');
+Insert into lOCAL VALUES (101,'Unidade Leste','Rua dos Trilhos,23');
+Insert into lOCAL VALUES (102,'Unidade Norte','Avenida Mazei,342');
+Insert into lOCAL VALUES (103,'Unidade Sul','Rua Dr. João Andrade,345');
+Insert into lOCAL VALUES (104,'Unidade Oeste','Avenida Franc. Matarazzo.2354');
+ 
+-- TABELA CLIENTE
+ 
+Insert into CLIENTE values (5010,'Ubaldino','M','São Paulo','SP',101);
+Insert into CLIENTE values (5011,'Ubalda','F','São Paulo','SP',101);
+Insert into CLIENTE values (5012,'Uberaba','M','São Paulo','SP',102);
+Insert into CLIENTE values (5013,'Ubirajara','M','São Paulo','SP',102);
+Insert into CLIENTE values (5014,'Ubiratã','M','São Paulo','SP',103);
+Insert into CLIENTE values (5015,'Uda','F','São Paulo','SP',103);
+Insert into CLIENTE values (5016,'Ugo','M','São Paulo','SP',104);
+Insert into CLIENTE values (5017,'Ula','F','São Paulo','SP',101);
+Insert into CLIENTE values (5018,'Ulisses','M','São Paulo','SP',101);
+Insert into CLIENTE values (5019,'Ulrico','M','São Paulo','SP',102);
+Insert into CLIENTE values (5020,'Urbano','M','São Paulo','SP',103);
+Insert into CLIENTE values (5021,'Urias','M','São Paulo','SP',103);
+Insert into CLIENTE values (5022,'Uriela','F','São Paulo','SP',104);
+Insert into CLIENTE values (5023,'Ursulina','F','São Paulo','SP',104);
+ 
+-- TABELA EDITORA
+ 
+Insert into EDITORA VALUES (1,'EDITORA A');
+Insert into EDITORA VALUES (2,'EDITORA B');
+Insert into EDITORA VALUES (3,'EDITORA C');
+Insert into EDITORA VALUES (4,'EDITORA D');
+Insert into EDITORA VALUES (5,'EDITORA E');
+ 
+-- TABELA LIVRO
+ 
+Insert into LIVRO VALUES (1001,'TITULO A',1,15,50.50,180);
+Insert into LIVRO VALUES (1002,'TITULO B',2,14,50.90,200);
+Insert into LIVRO VALUES (1003,'TITULO C',3,13,10.50,100);
+Insert into LIVRO VALUES (1004,'TITULO D',4,12,90.90,345);
+Insert into LIVRO VALUES (1005,'TITULO E',5,11,80.98,543);
+Insert into LIVRO VALUES (1006,'TITULO F',1,15,70.90,876);
+Insert into LIVRO VALUES (1007,'TITULO G',2,14,66.70,923);
+Insert into LIVRO VALUES (1008,'TITULO H',3,13,57.50,101);
+Insert into LIVRO VALUES (1009,'TITULO I',4,12,50.50,700);
+Insert into LIVRO VALUES (1010,'TITULO J',5,11,40.50,566);
+Insert into LIVRO VALUES (1011,'TITULO K',1,15,30.50,665);
+Insert into LIVRO VALUES (1012,'TITULO L',2,14,20.30,777);
+
+-- TABELA ESCREVE
+
+Insert into ESCREVE VALUES (1001,101, '10/01/1995');
+Insert into ESCREVE VALUES (1002,102, '10/01/1965');
+Insert into ESCREVE VALUES (1003,102, '10/01/1955');
+Insert into ESCREVE VALUES (1004,102, '10/01/1990');
+Insert into ESCREVE VALUES (1005,103, '10/01/1992');
+Insert into ESCREVE VALUES (1006,105, '10/01/2010');
+Insert into ESCREVE VALUES (1007,104, '10/01/2009');
+Insert into ESCREVE VALUES (1008,104, '10/01/2000');
+Insert into ESCREVE VALUES (1009,104, '10/01/2000');
+Insert into ESCREVE VALUES (1010,102, '10/01/1996');
+Insert into ESCREVE VALUES (1011,105, '10/01/1995');
+Insert into ESCREVE VALUES (1012,106, '10/01/1995');
+
+--TABELA VENDA
+
+Insert into VENDA VALUES(10001,5010,'01/09/2011');
+Insert into VENDA VALUES(10002,5011,'02/09/2011');
+Insert into VENDA VALUES(10003,5012,'03/09/2011');
+Insert into VENDA VALUES(10004,5013,'04/09/2011');
+Insert into VENDA VALUES(10005,5014,'05/09/2011');
+Insert into VENDA VALUES(10006,5015,'06/09/2011');
+ 
+-- TABELA ITEM
+ 
+Insert into ITEM VALUES(10,10001,1001,3);
+Insert into ITEM VALUES(11,10001,1002,4);
+Insert into ITEM VALUES(12,10001,1003,2);
+Insert into ITEM VALUES(13,10002,1001,4);
+Insert into ITEM VALUES(14,10002,1002,4);
+Insert into ITEM VALUES(15,10002,1003,5);
+Insert into ITEM VALUES(16,10003,1001,4);
+Insert into ITEM VALUES(17,10003,1002,4);
+Insert into ITEM VALUES(18,10003,1003,6);
+Insert into ITEM VALUES(19,10004,1001,4);
+Insert into ITEM VALUES(20,10004,1002,3);
+Insert into ITEM VALUES(21,10004,1003,2);
+Insert into ITEM VALUES(22,10005,1004,1);
+Insert into ITEM VALUES(23,10005,1005,2);
+Insert into ITEM VALUES(24,10005,1006,3);
+Insert into ITEM VALUES(25,10006,1007,2);
+Insert into ITEM VALUES(26,10006,1008,4);
+Insert into ITEM VALUES(27,10006,1009,6);

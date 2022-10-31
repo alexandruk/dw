@@ -1,0 +1,181 @@
+DECLARE
+-- CARGA NA TABELA DIMENSÃO_ASSUNTO COM BASE NA TABELA ASSUNTO
+ Cursor c_assunto is select cd_assunto, ds_assunto from assunto;
+ V_cd_assunto assunto.cd_assunto%type;
+ V_ds_assunto assunto.ds_assunto%type;
+BEGIN
+ OPEN c_assunto;
+ Fetch c_assunto into v_cd_assunto, v_ds_assunto;
+ While c_assunto%found loop
+ Insert into dimensao_assunto values(v_cd_assunto,v_ds_assunto);
+ Fetch c_assunto into v_cd_assunto, v_ds_assunto;
+End loop;
+Close c_assunto;
+End;
+/
+ 
+select count(*) from dimensao_ASSUNTO;
+ 
+DECLARE
+-- CARGA NA TABELA DIMENSÃO_LOCAL COM BASE NA TABELA LOCAL
+ Cursor c_local is select cod_local, nome_local, endereco_local from local;
+ V_cod_local local.cod_local%type;
+ V_nome_local local.nome_local%type;
+ V_end_local local.endereco_local%type;
+BEGIN
+ OPEN c_local;
+ Fetch c_local into v_cod_local, v_nome_local, v_end_local;
+ While c_local%found loop
+ Insert into dimensao_local values(v_cod_local, v_nome_local,v_end_local);
+ Fetch c_local into v_cod_local, v_nome_local, v_end_local;
+End loop;
+Close c_local;
+End;
+/
+ 
+select count(*) from dimensao_LOCAL;
+ 
+DECLARE
+-- CARGA NA TABELA DIMENSÃO_TEMPO COM BASE NA TABELA VENDA NO CAMPO DATA DA VENDA
+ Cursor c_venda is select dt_venda from venda;
+ V_dt_venda venda.dt_venda%type;
+ V_mes dimensao_tempo.mes%type;
+ V_ano dimensao_tempo.ano%type;
+BEGIN
+ OPEN c_venda;
+ Fetch c_venda into v_dt_venda;
+ While c_venda%found loop
+ v_mes:=to_char(v_dt_venda,'mm');
+ v_ano:=to_char(v_dt_venda,'yy');
+ Insert into dimensao_tempo values(v_dt_venda, v_mes, v_ano);
+ Fetch c_venda into v_dt_venda;
+ End loop;
+ Close c_venda;
+End;
+/
+ 
+select count(*) from dimensao_TEMPO;
+ 
+DECLARE
+-- CARGA NA TABELA DIMENSÃO_EDITORA COM BASE NA TABELA EDITORA
+ Cursor c_editora is select cd_editora, nm_editora from editora;
+ V_cd_editora editora.cd_editora%type;
+ V_nm_editora editora.nm_editora%type;
+BEGIN
+ OPEN c_editora;
+ Fetch c_editora into v_cd_editora, v_nm_editora;
+ While c_editora%found loop
+ Insert into dimensao_editora values(v_cd_editora,v_nm_editora);
+ Fetch c_editora into v_cd_editora, v_nm_editora;
+End loop;
+Close c_editora;
+End;
+/
+ 
+select count(*) from dimensao_EDITORA;
+ 
+DECLARE
+-- CARGA NA TABELA DIMENSÃO_LIVRO COM BASE NA TABELA LIVRO
+ Cursor c_livros is select cd_livro, nm_livro, qt_folhas from livro;
+ v_cod_livro dimensao_livro.cod_livro%type;
+ v_nm_livro dimensao_livro.nome%type;
+ v_quant_folhas dimensao_livro.quant_folhas%type;
+BEGIN
+ OPEN c_livros;
+ Fetch c_livros into v_cod_livro, v_nm_livro, v_quant_folhas;
+ While c_livros%found loop
+ Insert into dimensao_livro values(v_cod_livro, v_nm_livro, v_quant_folhas);
+ Fetch c_livros into v_cod_livro, v_nm_livro, v_quant_folhas;
+End loop;
+Close c_livros;
+End;
+/
+ 
+select count(*) from dimensao_LIVRO;
+ 
+DECLARE
+-- CARGA NA TABELA DIMENSÃO_CLIENTE COM BASE NA TABELA CLIENTE
+ Cursor c_cliente is select
+ cd_cliente, nm_cliente, sexo,ds_cidade,sg_estado from cliente;
+ v_cod_cliente dimensao_cliente.cod_cliente%type;
+ v_nm_cliente dimensao_cliente.nome%type;
+ v_cidade dimensao_cliente.cidade%type;
+ v_estado dimensao_cliente.estado%type;
+ v_sexo dimensao_cliente.sexo%type;
+BEGIN
+ OPEN c_cliente;
+ Fetch c_cliente into v_cod_cliente, v_nm_cliente, v_sexo, v_cidade, v_estado;
+ While c_cliente%found loop
+Insert into dimensao_cliente values(v_cod_cliente, v_nm_cliente, v_cidade, v_estado,
+ v_sexo);
+ Fetch c_cliente into v_cod_cliente, v_nm_cliente, v_sexo, v_cidade, v_estado;
+End loop;
+Close c_cliente;
+End;
+/
+ 
+select count(*) from dimensao_CLIENTE;
+ 
+DECLARE
+-- CARGA NA TABELA DIMENSÃO_AUTOR COM BASE NA TABELA AUTOR
+ Cursor c_autor is select nr_matricula, nm_autor, nr_cpf,ds_cidade, sg_estado from autor;
+ v_matricula_autor dimensao_autor.matricula_autor%type;
+ v_nome dimensao_autor.nome%type;
+ v_cpf dimensao_autor.cpf%type;
+ v_cidade dimensao_autor.cidade%type;
+ v_estado dimensao_autor.estado%type;
+BEGIN
+ OPEN c_autor;
+ Fetch c_autor into v_matricula_autor, v_nome, v_cpf, v_cidade, v_estado;
+ While c_autor%found loop
+ Insert into dimensao_autor values(v_matricula_autor, v_nome, v_cpf, v_cidade,
+ v_estado);
+ Fetch c_autor into v_matricula_autor, v_nome, v_cpf, v_cidade, v_estado;
+End loop;
+Close c_autor;
+End;
+/
+ 
+select count(*) from dimensao_AUTOR;
+ 
+DECLARE
+-- CARGA NA TABELA FATO_VENDA COM BASE NAS TABELAS DO MODELO TRANSACIONAL
+-- Para cada venda e itens (livro) da tabela transacional deve-se gerar uma venda na tabela dimensão, identificando o
+-- codigo da venda, o codigo do livro e a data da venda, o codigo da editora, o codigo do assunto, a quantidade de livros (qtde_item)
+-- e o valor das vendas que é a qtde de item vezes o valor do livro
+-- Para cada venda da tabela transacional deve-se identificar o codigo do cliente.
+-- Para cada cliente da tabela transacional deve-se identificar o codigo do local.
+-- Com base na venda e itens(livro) deve-se acessar a tabela escreve com base no codigo do livro e pegar o numero de matricula do autor
+-- Para cada codigo do livro da venda deve-se identificar o codigo do assunto do livro
+ 
+ Cursor c_venda is select * from venda;
+ Cursor c_item is select * from item;
+ reg_venda venda%rowtype;
+ reg_item item%rowtype;
+ v_cod_local local.cod_local%type;
+ v_cd_assunto assunto.cd_assunto%type;
+ v_cd_editora editora.cd_editora%type;
+ v_nr_matricula escreve.nr_matricula%type;
+ v_vl_livro livro.vl_livro%type;
+ v_total_livro livro.vl_livro%type;
+BEGIN
+ Open c_item;
+ Fetch c_item into reg_item;
+ While c_item%found loop
+ select * into reg_venda from venda where cd_venda = reg_item.cd_venda;
+ select cod_local into v_cod_local from CLIENTE where cd_cliente = reg_venda.cd_cliente;
+ select cd_assunto, cd_editora, vl_livro into v_cd_assunto, v_cd_editora, v_vl_livro from livro
+ where cd_livro = reg_item.cd_livro; 
+ v_total_livro:= reg_item.qt_item * v_vl_livro;
+ select nr_matricula into v_nr_matricula from escreve where cd_livro = reg_item.cd_livro;
+ insert into fato_venda values (reg_venda.cd_venda,reg_item.cd_livro,
+ reg_venda.dt_venda, v_cod_local,reg_venda.cd_cliente,
+ v_cd_assunto,v_cd_editora, v_nr_matricula,reg_item.qt_item,
+ v_total_livro);
+ Fetch c_item into reg_item;
+ End loop;
+ Close c_item;
+ End;
+/
+
+select count(*) from FATO_VENDA;
